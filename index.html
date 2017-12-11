@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mars Rover</title>
+    <title>The Mars Rover</title>
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/estilos.css">
@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <h1>[Mission] Controlling Mars Rover</h1>
+        <h1>[Mission] Controlling The Mars Rover</h1>
     </header>
     <section id="input">
         <header>
@@ -41,6 +41,9 @@
             <span class="keys"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
         </div>
     </section>
+    <section id="grid">
+        <div id="grid-wrapper"></div>
+    </section>
     <section id="history">
         <header>
             <h2>Travel history</h2>
@@ -50,7 +53,7 @@
         </div>
         <div id="travel-log-wrapper">
             <button value="PRINT TRAVEL LOG" onclick="printTraveLog(rover)">PRINT TRAVEL LOG</button>
-            <div id="travel-log-print"></div>
+            <ol id="travel-log-print"></ol>
         </div>
     </section>
     <div id="modal-aviso">

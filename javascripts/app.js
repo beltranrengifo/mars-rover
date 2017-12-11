@@ -68,23 +68,35 @@ function turnRight(rover) {
     movementHistory('turnRight D: ' + dir, rover);
 }
 
-function moveForward(rover) {
+function moveForward(rover,grid) {
     console.log('moveForward / posición previa: X ' + Xpos + ', Y ' + Ypos);
     // movementHistory('moveForward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
-    if ( dir === 'N' && Ypos < 10 ) {
-        Ypos += 1;
-    }
-    else if ( dir === 'S' && Ypos > 0 ) {
-        Ypos -= 1;
-    }
-    else if ( dir === 'E' && Xpos < 10 ) {
-        Xpos += 1;
-    }
-    else if ( dir === 'W' && Xpos > 0 ) {
-        Xpos -= 1;
-    }
-    else {
-        movementHistory('Rover is beyond limits',rover);
+    if (dir === 'N' && Ypos < 10) {
+        if (grid[Xpos][Ypos+1] != 'obstacle') {
+            Ypos += 1;
+        } else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'S' && Ypos > 0) {
+        if (grid[Xpos][Ypos-1] != 'obstacle') {
+            Ypos -= 1;
+        } else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'E' && Xpos < 10) {
+        if (grid[Xpos+1][Ypos] != 'obstacle') {
+            Xpos += 1;
+        } else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'W' && Xpos > 0) {
+        if (grid[Xpos-1][Ypos] != 'obstacle') {
+            Xpos -= 1;
+        } else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else {
+        movementHistory('Rover is beyond limits', rover);
     }
     console.log('moveForward / posición reasignada: X ' + Xpos + ', Y ' + Ypos);
     movementHistory('moveForward X ' + Xpos + ', Y ' + Ypos, rover);
@@ -92,21 +104,38 @@ function moveForward(rover) {
 
 function moveBackward(rover) {
     console.log('moveBackward / posición previa: X ' + Xpos + ', Y ' + Ypos);
+    var obstacle = grid[Xpos][Ypos];
     // movementHistory('moveBackward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
-    if ( dir === 'N' && Ypos > 0 ) {
-        Ypos -= 1;
-    }
-    else if ( dir === 'S' && Ypos < 10 ) {
-        Ypos += 1;
-    }
-    else if ( dir === 'E' && Xpos > 0 ) {
-        Xpos -= 1;
-    }
-    else if ( dir === 'W' && Xpos < 10 ) {
-        Xpos += 1;
-    }
-    else {
-        movementHistory('Rover is beyond limits',rover);
+    if (dir === 'N' && Ypos > 0) {
+        if (grid[Xpos][Ypos-1] != 'obstacle') {
+            Ypos -= 1;
+        }
+        else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'S' && Ypos < 10) {
+        if (grid[Xpos][Ypos+1] != 'obstacle') {
+            Ypos += 1;
+        }
+        else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'E' && Xpos > 0) {
+        if (grid[Xpos][Ypos-1] != 'obstacle') {
+            Xpos -= 1;
+        }
+        else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else if (dir === 'W' && Xpos < 10) {
+        if (grid[Xpos][Ypos+1] != 'obstacle') {
+            Xpos += 1;
+        }
+        else {
+            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+        }
+    } else {
+        movementHistory('Rover is beyond limits', rover);
     }
     console.log('moveBackward / posición reasignada: X ' + Xpos + ', Y ' + Ypos);
     movementHistory('moveBackward X ' + Xpos + ', Y ' + Ypos, rover);
@@ -122,17 +151,13 @@ function processTextSequence() {
         var command = movementSequenceLowercase.charAt(i);
         if (command === 'f') {
             moveForward(rover);
-        }
-        else if (command === 'b') {
+        } else if (command === 'b') {
             moveBackward(rover);
-        }
-        else if (command === 'l') {
+        } else if (command === 'l') {
             turnLeft(rover);
-        }
-        else if (command === 'r') {
+        } else if (command === 'r') {
             turnRight(rover);
-        }
-        else {
+        } else {
             modalAviso();
         }
     }
@@ -148,16 +173,16 @@ window.addEventListener("keyup", function(event) {
     console.log(key);
     switch (key) {
         case 'ArrowUp':
-            moveForward(rover);
+            moveForward(rover,grid);
             break;
         case 'ArrowDown':
-            moveBackward(rover);
+            moveBackward(rover,grid);
             break;
         case 'ArrowLeft':
-            turnLeft(rover);
+            turnLeft(rover,grid);
             break;
         case 'ArrowRight':
-            turnRight(rover);
+            turnRight(rover,grid);
             break;
     }
 });
@@ -165,7 +190,7 @@ window.addEventListener("keyup", function(event) {
 /* ======================
 crear history y print travel log
 ====================== */
-function movementHistory(movement,rover) {
+function movementHistory(movement, rover) {
     var ul = document.getElementById("history-ul");
     var li = document.createElement("li");
     //timestamp
@@ -185,10 +210,10 @@ function movementHistory(movement,rover) {
 }
 
 function printTraveLog(rover) {
-    var p = document.createElement("p");
+    var li = document.createElement("li");
     var travelLogContainer = document.getElementById("travel-log-print");
-    p.appendChild(document.createTextNode(rover.travelLog));
-    travelLogContainer.appendChild(p);
+    li.appendChild(document.createTextNode(rover.travelLog));
+    travelLogContainer.appendChild(li);
 }
 
 /* ======================
@@ -204,3 +229,28 @@ abort mission
 function reloadApp() {
     location.reload();
 }
+
+/* ======================
+GRID
+====================== */
+var grid = [
+    [false, false, 'obstacle', false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, 'obstacle', false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, 'obstacle', false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, 'obstacle', false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, 'obstacle', false, false],
+    ['obstacle', false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, 'obstacle', false, false, false, false, false, false]
+];
+
+// function createGridMap(grid) {
+//     var gridWrapper = document.getElementById("grid-wrapper");
+//     var sector = document.createElement("div");
+//     for (var i = 0; i < gird.length; i++) {
+//         gird[i]
+//     }
+//     gridWrapper.appendChild(sector);
+// }

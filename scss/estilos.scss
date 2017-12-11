@@ -110,7 +110,7 @@ section {
         #history-wrapper {
             width: 700px;
             min-height: 200px;
-            max-width: 100%;
+            max-width: 85%;
             border: 2px solid $verde;
             margin: 0 auto;
             padding: 5px 20px;
@@ -129,8 +129,9 @@ section {
             width: 400px;
             margin: 0 auto;
             background: #222222;
-
-            p {
+            list-style-type: decimal;
+            padding-left: 40px;
+            li {
                 padding: 7px;
                 font-size: 0.45em;
                 line-height: 1.6;

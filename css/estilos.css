@@ -202,7 +202,7 @@ section {
   section#history #history-wrapper {
     width: 700px;
     min-height: 200px;
-    max-width: 100%;
+    max-width: 85%;
     border: 2px solid #00ff00;
     margin: 0 auto;
     padding: 5px 20px;
@@ -216,8 +216,10 @@ section {
     text-align: left;
     width: 400px;
     margin: 0 auto;
-    background: #222222; }
-    section#history #travel-log-print p {
+    background: #222222;
+    list-style-type: decimal;
+    padding-left: 40px; }
+    section#history #travel-log-print li {
       padding: 7px;
       font-size: 0.45em;
       line-height: 1.6;
