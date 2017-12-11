@@ -137,6 +137,38 @@ header {
   header h1 {
     font-size: 1.4em; }
 
+button,
+input {
+  background: #222222;
+  border: 1px solid #191919;
+  text-align: center;
+  height: 50px;
+  min-width: 300px;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 0.5px; }
+  button:focus,
+  input:focus {
+    outline: none !important;
+    border: 1px solid #00ff00;
+    box-shadow: none; }
+
+input {
+  width: 80%;
+  color: #00ff00;
+  margin-bottom: 10px; }
+
+button {
+  display: block;
+  margin: 10px auto 5px;
+  border-radius: 0;
+  padding: 15px 30px;
+  cursor: pointer;
+  color: rgba(0, 255, 0, 0.5); }
+  button:hover {
+    background: #1b1b1b;
+    color: #00ff00;
+    border: 1px solid #00ff00; }
+
 section {
   padding: 50px 0; }
   section > header {
@@ -151,42 +183,14 @@ section {
     margin: 15px 0;
     letter-spacing: 2px; }
     section p span {
-      color: #ABFFFE;
+      color: red;
       letter-spacing: 2px; }
-  section button,
-  section input {
-    background: #222222;
-    border: 1px solid #191919;
-    text-align: center;
-    height: 50px;
-    min-width: 300px;
-    font-family: 'Press Start 2P', cursive;
-    letter-spacing: 0.5px; }
-    section button:focus,
-    section input:focus {
-      outline: none !important;
-      border: 1px solid #00ff00;
-      box-shadow: none; }
-  section input {
-    width: 80%;
-    color: #00ff00;
-    margin-bottom: 10px; }
-  section button {
-    display: block;
-    margin: 10px auto 5px;
-    border-radius: 0;
-    padding: 15px 30px;
-    cursor: pointer;
-    color: rgba(0, 255, 0, 0.5); }
-    section button:hover {
-      background: #1b1b1b;
-      color: #00ff00;
-      border: 1px solid #00ff00; }
   section#keyboard .arrow-wrapper {
     margin-top: 20px; }
+    section#keyboard .arrow-wrapper:last-child {
+      margin-top: 12px; }
     section#keyboard .arrow-wrapper .keys {
       border: 1px solid #00ff00;
-      border-radius: 4px;
       display: inline-block;
       width: 80px;
       height: 80px;
@@ -206,7 +210,8 @@ section {
     section#history #history-wrapper #history-ul {
       font-size: 0.5em;
       line-height: 1.4;
-      list-style: disc; }
+      list-style-type: decimal;
+      padding-left: 22px; }
   section#history #travel-log-print {
     text-align: left;
     width: 400px;
@@ -218,20 +223,56 @@ section {
       line-height: 1.6;
       color: rgba(0, 255, 0, 0.5); }
 
+#modal-aviso {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(34, 34, 34, 0.95); }
+  #modal-aviso .warning {
+    font-size: 5em;
+    line-height: 1; }
+  #modal-aviso #modal-content, #modal-aviso #modal-reload {
+    width: 400px;
+    max-width: 100%;
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    top: 30%;
+    line-height: 2; }
+  #modal-aviso #modal-content p {
+    font-size: .6em;
+    line-height: 1.5;
+    margin-top: 20px; }
+  #modal-aviso #modal-reload {
+    border: none;
+    width: initial; }
+    #modal-aviso #modal-reload button {
+      background: rgba(0, 0, 0, 0.25);
+      border-color: #00ff00;
+      color: #00ff00; }
+
 ::-webkit-input-placeholder {
   color: rgba(0, 255, 0, 0.5);
-  font-size: 0.75em; }
+  font-size: 0.65em;
+  letter-spacing: 0; }
 
 ::-moz-placeholder {
   color: rgba(0, 255, 0, 0.5);
-  font-size: 0.75em; }
+  font-size: 0.65em;
+  letter-spacing: 0; }
 
 :-ms-input-placeholder {
   color: rgba(0, 255, 0, 0.5);
-  font-size: 0.75em; }
+  font-size: 0.65em;
+  letter-spacing: 0; }
 
 :-moz-placeholder {
   color: rgba(0, 255, 0, 0.5);
-  font-size: 0.75em; }
+  font-size: 0.65em;
+  letter-spacing: 0; }
 
 /*# sourceMappingURL=estilos.css.map */
