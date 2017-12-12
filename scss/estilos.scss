@@ -39,6 +39,9 @@ input {
     width: 80%;
     color: $verde;
     margin-bottom: 10px;
+    &[type=radio] {
+        width: initial;
+    }
 }
 
 button {

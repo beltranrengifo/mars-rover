@@ -1,14 +1,65 @@
 /* ======================
 Rover
 ====================== */
-var rover = {
-    direction: 'N',
-    position: {
-        x: 0,
-        y: 0
+
+var rovers = [
+    {
+        id: 1,
+        name: 'Opportunity',
+        direction: 'N',
+        position: {
+            x: 0,
+            y: 0
+        },
+        travelLog: []
     },
-    travelLog: []
-};
+    {
+        id: 2,
+        name: 'Curiosity',
+        direction: 'S',
+        position: {
+            x: 9,
+            y: 9
+        },
+        travelLog: []
+    }
+];
+console.log(rovers);
+
+var rover;
+
+function checkRover() {
+    var radio0 = document.getElementById("radio0");
+    var radio1 = document.getElementById("radio1");
+    var RoverASelected = radio0.checked;
+    var RoverBSelected = radio1.checked;
+    if(radio0.checked) {
+        rover = rovers[0];
+        console.log(rover);
+    }
+    else if (radio1.checked) {
+        rover = rovers[1];
+        console.log(rover);
+    }
+    movementHistory('default D: ' + dir, rover);
+    movementHistory('default X: ' + Xpos, rover);
+    movementHistory('default Y: ' + Ypos, rover);
+}
+
+
+// var rover = {
+//     direction: 'N',
+//     position: {
+//         x: 0,
+//         y: 0
+//     },
+//     travelLog: []
+// };
+// cargar historia por defecto después del load inicial y comprobar el rover seleccionado por defecto
+document.addEventListener('DOMContentLoaded', function() {
+    checkRover();
+}, false);
+
 var dir = rover.direction;
 var Xpos = rover.position.x;
 var Ypos = rover.position.y;
@@ -16,12 +67,7 @@ console.log('dirección por defecto: ' + dir);
 console.log('posición por defecto X: ' + Xpos);
 console.log('posición por defecto Y: ' + Ypos);
 
-// cargar historia por defecto después del load inicial
-document.addEventListener('DOMContentLoaded', function() {
-    movementHistory('default D: ' + dir, rover);
-    movementHistory('default X: ' + Xpos, rover);
-    movementHistory('default Y: ' + Ypos, rover);
-}, false);
+
 
 /* ======================
 funciones de movimiento
@@ -206,7 +252,7 @@ function movementHistory(movement, rover) {
     li.appendChild(document.createTextNode(movement + ' | ' + today));
     ul.appendChild(li);
     rover.travelLog.push(movement);
-    console.log(rover.travelLog);
+    // console.log(rover.travelLog);
 }
 
 function printTraveLog(rover) {
