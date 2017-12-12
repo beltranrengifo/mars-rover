@@ -1,7 +1,6 @@
 /* ======================
-Rover
+Rovers
 ====================== */
-
 var rovers = [
     {
         id: 1,
@@ -24,50 +23,40 @@ var rovers = [
         travelLog: []
     }
 ];
-console.log(rovers);
 
+//variables globales rover
 var rover;
+var roverName;
+var dir;
+var Xpos;
+var Ypos;
 
-function checkRover() {
+// detectar rover
+function whichRover() {
     var radio0 = document.getElementById("radio0");
     var radio1 = document.getElementById("radio1");
     var RoverASelected = radio0.checked;
     var RoverBSelected = radio1.checked;
     if(radio0.checked) {
         rover = rovers[0];
-        console.log(rover);
     }
     else if (radio1.checked) {
         rover = rovers[1];
-        console.log(rover);
     }
+    dir = rover.direction;
+    Xpos = rover.position.x;
+    Ypos = rover.position.y;
+    roverName = rover.name;
+    console.log('dirección por defecto: ' + dir);
+    console.log('Rover: ' + roverName);
+    console.log('dirección por defecto: ' + dir);
+    console.log('posición por defecto X: ' + Xpos);
+    console.log('posición por defecto Y: ' + Ypos);
+    movementHistory('Active Rover: ' + roverName, rover);
     movementHistory('default D: ' + dir, rover);
     movementHistory('default X: ' + Xpos, rover);
     movementHistory('default Y: ' + Ypos, rover);
 }
-
-
-// var rover = {
-//     direction: 'N',
-//     position: {
-//         x: 0,
-//         y: 0
-//     },
-//     travelLog: []
-// };
-// cargar historia por defecto después del load inicial y comprobar el rover seleccionado por defecto
-document.addEventListener('DOMContentLoaded', function() {
-    checkRover();
-}, false);
-
-var dir = rover.direction;
-var Xpos = rover.position.x;
-var Ypos = rover.position.y;
-console.log('dirección por defecto: ' + dir);
-console.log('posición por defecto X: ' + Xpos);
-console.log('posición por defecto Y: ' + Ypos);
-
-
 
 /* ======================
 funciones de movimiento
@@ -209,7 +198,9 @@ function processTextSequence() {
     }
 }
 
-
+/* ======================
+EVENTOS
+====================== */
 
 /* ======================
 eventos de teclado
@@ -234,7 +225,17 @@ window.addEventListener("keyup", function(event) {
 });
 
 /* ======================
-crear history y print travel log
+load inicial
+====================== */
+document.addEventListener('DOMContentLoaded', function() {
+    whichRover();
+}, false);
+
+/* ======================
+FIN EVENTOS
+====================== */
+/* ======================
+history y print travel log
 ====================== */
 function movementHistory(movement, rover) {
     var ul = document.getElementById("history-ul");
@@ -291,12 +292,3 @@ var grid = [
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, 'obstacle', false, false, false, false, false, false]
 ];
-
-// function createGridMap(grid) {
-//     var gridWrapper = document.getElementById("grid-wrapper");
-//     var sector = document.createElement("div");
-//     for (var i = 0; i < gird.length; i++) {
-//         gird[i]
-//     }
-//     gridWrapper.appendChild(sector);
-// }
