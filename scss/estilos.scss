@@ -1,6 +1,7 @@
 @import 'reset';
 $verde: #00ff00;
 $verde-dark: rgba(0, 255, 0, .5);
+$vino:#421d23;
 /* ======================
 Tags y helpers
 ====================== */
@@ -121,9 +122,11 @@ section {
             display: inline-block;
 
             &.active {
-                border-color: $verde;
-                color: $verde;
-                background: black;
+                border-color: yellow;
+                color: yellow;
+                background: #222222;
+                border-style: groove;
+                border-width: 4px;
             }
         }
 

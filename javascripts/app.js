@@ -30,9 +30,10 @@ var roverName;
 var dir;
 var Xpos;
 var Ypos;
+var obstacleText = 'Rover has encountered an obstacle. Try another direction!';
+var beyondLimitsText = 'Rover is beyond limits';
 
 // detectar rover
-
 function activateRover(btn) {
     //borrar clase active
     var btns = document.querySelectorAll('.rover-change-button');
@@ -119,10 +120,11 @@ function turnRight(rover) {
     console.log('turnRight / dirección reasignada: ' + dir);
     movementHistory('turnRight D: ' + dir, rover);
 }
-var obstacleText = 'Rover has encountered an obstacle. Try another direction!';
-var beyondLimitsText = 'Rover is beyond limits';
-function moveForward(rover,grid) {
+
+
+function moveForward(rover) {
     console.log('moveForward / posición previa: X ' + Xpos + ', Y ' + Ypos);
+    var obstacle = grid[Xpos][Ypos];
     // movementHistory('moveForward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
     if (dir === 'N' && Ypos < 10) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
@@ -203,13 +205,13 @@ function processTextSequence() {
     for (var i = 0; i < movementSequenceLowercase.length; i++) {
         var command = movementSequenceLowercase.charAt(i);
         if (command === 'f') {
-            moveForward(rover);
+            moveForward(rover,grid);
         } else if (command === 'b') {
-            moveBackward(rover);
+            moveBackward(rover,grid);
         } else if (command === 'l') {
-            turnLeft(rover);
+            turnLeft(rover,grid);
         } else if (command === 'r') {
-            turnRight(rover);
+            turnRight(rover,grid);
         } else {
             modalAviso();
         }
@@ -254,6 +256,7 @@ load inicial
 ====================== */
 document.addEventListener('DOMContentLoaded', function() {
     whichRover();
+    generateGrid();
 }, false);
 
 /* ======================
@@ -289,9 +292,14 @@ function printTraveLog(rover) {
 /* ======================
 lanzar modal aviso
 ====================== */
+
 function modalAviso() {
-    var modal = document.getElementById('modal-aviso')
+    var modal = document.getElementById('modal-aviso');
     modal.style.display = 'block';
+}
+function closeModal() {
+    var modal = document.getElementById('modal-aviso');
+    modal.style.display = 'none';
 }
 /* ======================
 abort mission
@@ -315,3 +323,21 @@ var grid = [
     [false, false, false, false, false, false, false, false, false, false],
     [false, false, false, 'obstacle', false, false, false, false, false, false]
 ];
+
+function generateGrid() {
+    console.log(grid.length);
+    var gridContainer = document.getElementById('grid-wrapper');
+    for (var x = 0; x < grid.length; x++) {
+        var row = document.createElement("div");
+        row.className = 'grid-row';
+        row.setAttribute("id", "x"+x+"");
+        gridContainer.appendChild(row);
+        for (var y = 0; y < grid[x].length; y++) {
+            var rowX = document.getElementById('x'+x+'');
+            var col = document.createElement("div");
+            col.className = 'grid-col';
+            col.setAttribute("id", "y"+y+"");
+            rowX.appendChild(col);
+        }
+    }
+}
