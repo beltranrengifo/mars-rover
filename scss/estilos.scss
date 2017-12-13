@@ -166,8 +166,9 @@ section {
     &#history {
         #history-wrapper {
             width: 700px;
-            min-height: 200px;
+            height: 300px;
             max-width: 85%;
+            overflow-y: scroll;
             border: 2px solid $verde;
             margin: 0 auto;
             padding: 5px 20px;

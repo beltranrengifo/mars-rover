@@ -44,6 +44,7 @@ function activateRover(btn) {
 
     //lanza la reasignación de rover como objeto en las variables
     whichRover();
+    autoScrollList();
 }
 
 function whichRover() {
@@ -213,26 +214,37 @@ function processTextSequence() {
             modalAviso();
         }
     }
+    autoScrollList();
 }
 
+//autoscroll en la lista de historia
+function autoScrollList() {
+    var bottomList = document.getElementById("history-wrapper");
+    bottomList.scrollTop = bottomList.scrollHeight;
+}
 /* ======================
 eventos de teclado
 ====================== */
 window.addEventListener("keyup", function(event) {
+
     var key = event.key;
     console.log(key);
     switch (key) {
         case 'ArrowUp':
             moveForward(rover,grid);
+            autoScrollList();
             break;
         case 'ArrowDown':
             moveBackward(rover,grid);
+            autoScrollList();
             break;
         case 'ArrowLeft':
             turnLeft(rover,grid);
+            autoScrollList();
             break;
         case 'ArrowRight':
             turnRight(rover,grid);
+            autoScrollList();
             break;
     }
 });
@@ -272,6 +284,7 @@ function printTraveLog(rover) {
     li.appendChild(document.createTextNode(rover.travelLog));
     travelLogContainer.appendChild(li);
 }
+
 
 /* ======================
 lanzar modal aviso
