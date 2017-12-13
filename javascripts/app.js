@@ -32,15 +32,27 @@ var Xpos;
 var Ypos;
 
 // detectar rover
+
+function activateRover(btn) {
+    //borrar clase active
+    var btns = document.querySelectorAll('.rover-change-button');
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.remove('active');
+    }
+    //add clase a this btn
+    btn.classList.add("active");
+
+    //lanza la reasignación de rover como objeto en las variables
+    whichRover();
+}
+
 function whichRover() {
-    var radio0 = document.getElementById("radio0");
-    var radio1 = document.getElementById("radio1");
-    var RoverASelected = radio0.checked;
-    var RoverBSelected = radio1.checked;
-    if(radio0.checked) {
+    var changeRoverBtn1 = document.getElementById("select-rover-1");
+    var changeRoverBtn2 = document.getElementById("select-rover-2");
+    if(changeRoverBtn1.classList.contains('active')) {
         rover = rovers[0];
     }
-    else if (radio1.checked) {
+    else if (changeRoverBtn2.classList.contains('active')) {
         rover = rovers[1];
     }
     dir = rover.direction;
@@ -56,6 +68,10 @@ function whichRover() {
     movementHistory('default D: ' + dir, rover);
     movementHistory('default X: ' + Xpos, rover);
     movementHistory('default Y: ' + Ypos, rover);
+    //print el rover activo
+    var selectedRoverText = document.getElementById("selected-rover");
+    selectedRoverText.innerHTML = "";
+    selectedRoverText.appendChild(document.createTextNode(rover.name));
 }
 
 /* ======================
@@ -102,7 +118,8 @@ function turnRight(rover) {
     console.log('turnRight / dirección reasignada: ' + dir);
     movementHistory('turnRight D: ' + dir, rover);
 }
-
+var obstacleText = 'Rover has encountered an obstacle. Try another direction!';
+var beyondLimitsText = 'Rover is beyond limits';
 function moveForward(rover,grid) {
     console.log('moveForward / posición previa: X ' + Xpos + ', Y ' + Ypos);
     // movementHistory('moveForward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
@@ -110,28 +127,28 @@ function moveForward(rover,grid) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Ypos += 1;
         } else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'S' && Ypos > 0) {
         if (grid[Xpos][Ypos-1] != 'obstacle') {
             Ypos -= 1;
         } else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'E' && Xpos < 10) {
         if (grid[Xpos+1][Ypos] != 'obstacle') {
             Xpos += 1;
         } else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'W' && Xpos > 0) {
         if (grid[Xpos-1][Ypos] != 'obstacle') {
             Xpos -= 1;
         } else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else {
-        movementHistory('Rover is beyond limits', rover);
+        movementHistory(beyondLimitsText, rover);
     }
     console.log('moveForward / posición reasignada: X ' + Xpos + ', Y ' + Ypos);
     movementHistory('moveForward X ' + Xpos + ', Y ' + Ypos, rover);
@@ -146,31 +163,31 @@ function moveBackward(rover) {
             Ypos -= 1;
         }
         else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'S' && Ypos < 10) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Ypos += 1;
         }
         else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'E' && Xpos > 0) {
         if (grid[Xpos][Ypos-1] != 'obstacle') {
             Xpos -= 1;
         }
         else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else if (dir === 'W' && Xpos < 10) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Xpos += 1;
         }
         else {
-            movementHistory('Rover has encountered an obstacle. Try another direction!', rover);
+            movementHistory(obstacleText, rover);
         }
     } else {
-        movementHistory('Rover is beyond limits', rover);
+        movementHistory(beyondLimitsText, rover);
     }
     console.log('moveBackward / posición reasignada: X ' + Xpos + ', Y ' + Ypos);
     movementHistory('moveBackward X ' + Xpos + ', Y ' + Ypos, rover);
@@ -197,10 +214,6 @@ function processTextSequence() {
         }
     }
 }
-
-/* ======================
-EVENTOS
-====================== */
 
 /* ======================
 eventos de teclado
@@ -231,9 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
     whichRover();
 }, false);
 
-/* ======================
-FIN EVENTOS
-====================== */
 /* ======================
 history y print travel log
 ====================== */

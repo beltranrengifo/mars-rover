@@ -15,38 +15,50 @@
         <h1>[Mission] Controlling The Mars Rover</h1>
     </header>
     <section id="select-rover">
+        <header>
+            <h2>Select the Rover</h2>
+        </header>
         <div>
-            <input id="radio0" type="radio" name="grupo1" checked>Rover A Opportunity<br>
-            <input id="radio1" type="radio" name="grupo1" > Rover B Curiosity<br>
+            <button onclick="activateRover(this)" id="select-rover-1" class="active rover-change-button">Rover 1 Opportunity</button>
+            <button onclick="activateRover(this)" id="select-rover-2" class="rover-change-button">Rover 2 Curiosity</button>
+        </div>
+        <div id="selected-rover-wrap">
+            Selected Rover: <span id="selected-rover"></span>
         </div>
     </section>
-    <section id="input">
-        <header>
-            <h2>Move Rover using char sequencer</h2>
-        </header>
-        <div class="form-wrap">
-            <input type="text" placeholder="insert travel sequence: 'l' left, 'r' right, 'f' forward, 'b' backward" id="movement-sequence">
-            <button value="PROCESS SEQUENCE" onclick="processTextSequence()">PROCESS SEQUENCE</button>
-            <button value="ABORT MISSION" onclick="reloadApp()">ABORT MISSION</button>
+    <div class="column-container">
+        <div class="col col-6">
+            <section id="input">
+                <header>
+                    <h2>Move Rover using char sequencer</h2>
+                </header>
+                <div class="form-wrap">
+                    <input type="text" placeholder="insert travel sequence: 'l' left, 'r' right, 'f' forward, 'b' backward" id="movement-sequence">
+                    <button value="PROCESS SEQUENCE" onclick="processTextSequence()">PROCESS SEQUENCE</button>
+                    <button value="ABORT MISSION" onclick="reloadApp()">ABORT MISSION</button>
+                </div>
+            </section>
         </div>
-    </section>
-    <section id="keyboard">
-        <header>
-            <h2>Move Rover using keyboard controller</h2>
-        </header>
-        <p>Use <span>ArrowUp</span> to move forward one step</p>
-        <p>Use <span>ArrowDown</span> to move backward one step</p>
-        <p>Use <span>ArrowLeft</span> to turn left</p>
-        <p>Use <span>ArrowRight</span> to turn right</p>
-        <div class="arrow-wrapper">
-            <span class="keys"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></span>
+        <div class="col col-6">
+            <section id="keyboard">
+                <header>
+                    <h2>Move Rover using keyboard controller</h2>
+                </header>
+                <p>Use <span>ArrowUp</span> to move forward one step</p>
+                <p>Use <span>ArrowDown</span> to move backward one step</p>
+                <p>Use <span>ArrowLeft</span> to turn left</p>
+                <p>Use <span>ArrowRight</span> to turn right</p>
+                <div class="arrow-wrapper">
+                    <span class="keys"><i class="fa fa-long-arrow-up" aria-hidden="true"></i></span>
+                </div>
+                <div class="arrow-wrapper">
+                    <span class="keys"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
+                    <span class="keys"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></span>
+                    <span class="keys"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                </div>
+            </section>
         </div>
-        <div class="arrow-wrapper">
-            <span class="keys"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
-            <span class="keys"><i class="fa fa-long-arrow-down" aria-hidden="true"></i></span>
-            <span class="keys"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-        </div>
-    </section>
+    </div>
     <section id="grid">
         <div id="grid-wrapper"></div>
     </section>
