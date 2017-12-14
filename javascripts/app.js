@@ -1,8 +1,7 @@
-/* ======================
-Rovers
-====================== */
-var rovers = [
-    {
+/* ========================================================
+ROVERS
+======================================================== */
+var rovers = [{
         id: 1,
         name: 'Opportunity',
         direction: 'N',
@@ -24,9 +23,9 @@ var rovers = [
     }
 ];
 
-
-
-//variables globales rover
+/* ========================================================
+variables globales
+======================================================== */
 var rover;
 var roverName;
 var dir;
@@ -39,7 +38,13 @@ var posRov1X = rovers[0].position.x;
 var posRov1Y = rovers[0].position.y;
 var posRov2X = rovers[1].position.x;
 var posRov2Y = rovers[1].position.y;
-// detectar rover
+//tecla
+var key;
+
+/* ========================================================
+DETECTAR ROVER CON LOS BOTONES DE SELECCIÓN
+======================================================== */
+
 function activateRover(btn) {
     //borrar clase active
     var btns = document.querySelectorAll('.rover-change-button');
@@ -54,13 +59,15 @@ function activateRover(btn) {
     autoScrollList();
 }
 
+/* ========================================================
+ASIGNAR ROVER ACTIVO A VARIABLES + POSICIÓN POR DEFECTO
+======================================================== */
 function whichRover() {
     var changeRoverBtn1 = document.getElementById("select-rover-1");
     var changeRoverBtn2 = document.getElementById("select-rover-2");
-    if(changeRoverBtn1.classList.contains('active')) {
+    if (changeRoverBtn1.classList.contains('active')) {
         rover = rovers[0];
-    }
-    else if (changeRoverBtn2.classList.contains('active')) {
+    } else if (changeRoverBtn2.classList.contains('active')) {
         rover = rovers[1];
     }
     dir = rover.direction;
@@ -82,9 +89,9 @@ function whichRover() {
     selectedRoverText.appendChild(document.createTextNode(rover.name));
 }
 
-/* ======================
-funciones de movimiento
-====================== */
+/* ========================================================
+POSICIONAMIENTO DEL ROVER EN COORDENADAS
+======================================================== */
 function turnLeft(rover) {
     console.log('turnLeft / dirección previa: ' + dir);
     // movementHistory('turnLeft D: ' + dir, rover);
@@ -132,7 +139,7 @@ function moveForward(rover) {
     var obstacle = grid[Xpos][Ypos];
     // movementHistory('moveForward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
     if (dir === 'N' && Ypos < 9) {
-        if (grid[Xpos][Ypos+1] != 'obstacle') {
+        if (grid[Xpos][Ypos + 1] != 'obstacle') {
             Ypos += 1;
             moveRoverGraphicFW();
 
@@ -140,21 +147,21 @@ function moveForward(rover) {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'S' && Ypos > 0) {
-        if (grid[Xpos][Ypos-1] != 'obstacle') {
+        if (grid[Xpos][Ypos - 1] != 'obstacle') {
             Ypos -= 1;
             moveRoverGraphicBW();
         } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'E' && Xpos < 9) {
-        if (grid[Xpos+1][Ypos] != 'obstacle') {
+        if (grid[Xpos + 1][Ypos] != 'obstacle') {
             Xpos += 1;
             moveRoverGraphicRight();
         } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'W' && Xpos > 0) {
-        if (grid[Xpos-1][Ypos] != 'obstacle') {
+        if (grid[Xpos - 1][Ypos] != 'obstacle') {
             Xpos -= 1;
             moveRoverGraphicLeft();
         } else {
@@ -172,35 +179,31 @@ function moveBackward(rover) {
     var obstacle = grid[Xpos][Ypos];
     // movementHistory('moveBackward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
     if (dir === 'N' && Ypos > 0) {
-        if (grid[Xpos][Ypos-1] != 'obstacle') {
+        if (grid[Xpos][Ypos - 1] != 'obstacle') {
             Ypos -= 1;
             moveRoverGraphicBW();
-        }
-        else {
+        } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'S' && Ypos < 9) {
-        if (grid[Xpos][Ypos+1] != 'obstacle') {
+        if (grid[Xpos][Ypos + 1] != 'obstacle') {
             Ypos += 1;
             moveRoverGraphicFW();
-        }
-        else {
+        } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'E' && Xpos > 0) {
-        if (grid[Xpos][Ypos-1] != 'obstacle') {
+        if (grid[Xpos][Ypos - 1] != 'obstacle') {
             Xpos -= 1;
             moveRoverGraphicLeft();
-        }
-        else {
+        } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'W' && Xpos < 9) {
-        if (grid[Xpos][Ypos+1] != 'obstacle') {
+        if (grid[Xpos][Ypos + 1] != 'obstacle') {
             Xpos += 1;
             moveRoverGraphicRight();
-        }
-        else {
+        } else {
             movementHistory(obstacleText, rover);
         }
     } else {
@@ -210,57 +213,23 @@ function moveBackward(rover) {
     movementHistory('moveBackward X ' + Xpos + ', Y ' + Ypos, rover);
 }
 
-/* ============================
-mover los rover gráficamente
-============================== */
-function moveRoverGraphicFW(){
-    var lastCell = document.getElementById('x'+[Xpos]+'y'+[Ypos-1]);
-    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
-    console.log('palante: cambia la clase rover');
-    lastCell.classList.remove("rover");
-    nextCell.classList.add("rover");
-}
-function moveRoverGraphicBW(){
-    var lastCell = document.getElementById('x'+[Xpos]+'y'+[Ypos+1]);
-    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
-    console.log('patrás: cambia la clase rover');
-    lastCell.classList.remove("rover");
-    nextCell.classList.add("rover");
-}
-function moveRoverGraphicLeft(){
-    var lastCell = document.getElementById('x'+[Xpos+1]+'y'+[Ypos]);
-    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
-    lastCell.classList.remove("rover");
-    nextCell.classList.add("rover");
-    console.log(lastCell);
-    console.log(nextCell);
 
-}
-function moveRoverGraphicRight(){
-    var lastCell = document.getElementById('x'+[Xpos-1]+'y'+[Ypos]);
-    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
-    lastCell.classList.remove("rover");
-    nextCell.classList.add("rover");
-    console.log('cell last: '+lastCell);
-    console.log('cell arriving: '+nextCell);
-}
-
-/* ======================
-procesar sequencia de texto / movimientos
-====================== */
+/* ========================================================
+PROCESAR SEQUENCIA DE CARACTERES
+======================================================== */
 function processTextSequence() {
     var movementSequence = document.getElementById('movement-sequence').value;
     var movementSequenceLowercase = movementSequence.toLowerCase();
     for (var i = 0; i < movementSequenceLowercase.length; i++) {
         var command = movementSequenceLowercase.charAt(i);
         if (command === 'f') {
-            moveForward(rover,grid);
+            moveForward(rover, grid);
         } else if (command === 'b') {
-            moveBackward(rover,grid);
+            moveBackward(rover, grid);
         } else if (command === 'l') {
-            turnLeft(rover,grid);
+            turnLeft(rover, grid);
         } else if (command === 'r') {
-            turnRight(rover,grid);
+            turnRight(rover, grid);
         } else {
             modalAviso();
         }
@@ -273,44 +242,10 @@ function autoScrollList() {
     var bottomList = document.getElementById("history-wrapper");
     bottomList.scrollTop = bottomList.scrollHeight;
 }
-/* ======================
-eventos de teclado
-====================== */
-window.addEventListener("keyup", function(event) {
 
-    var key = event.key;
-    console.log(key);
-    switch (key) {
-        case 'ArrowUp':
-            moveForward(rover);
-            autoScrollList();
-            break;
-        case 'ArrowDown':
-            moveBackward(rover);
-            autoScrollList();
-            break;
-        case 'ArrowLeft':
-            turnLeft(rover);
-            autoScrollList();
-            break;
-        case 'ArrowRight':
-            turnRight(rover);
-            autoScrollList();
-            break;
-    }
-});
-
-/* ======================
-load inicial
-====================== */
-document.addEventListener('DOMContentLoaded', function() {
-    whichRover();
-    generateGrid();
-}, false);
-
-/* ======================
-history y print travel log
-====================== */
+/* ========================================================
+LOG
+======================================================== */
 function movementHistory(movement, rover) {
     var ul = document.getElementById("history-ul");
     var li = document.createElement("li");
@@ -337,29 +272,30 @@ function printTraveLog(rover) {
     travelLogContainer.appendChild(li);
 }
 
-
-/* ======================
-lanzar modal aviso
-====================== */
+/* ========================================================
+MODAL
+======================================================== */
 
 function modalAviso() {
     var modal = document.getElementById('modal-aviso');
     modal.style.display = 'block';
 }
+
 function closeModal() {
     var modal = document.getElementById('modal-aviso');
     modal.style.display = 'none';
 }
-/* ======================
-abort mission
-====================== */
+
+/* ========================================================
+ABORT MISSION
+======================================================== */
 function reloadApp() {
     location.reload();
 }
 
-/* ======================
+/* ========================================================
 GRID
-====================== */
+======================================================== */
 var grid = [
     ['rover', false, 'obstacle', false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, 'obstacle', false],
@@ -381,25 +317,98 @@ function generateGrid() {
     for (var x = 0; x < grid.length; x++) {
         var row = document.createElement("div");
         row.className = 'grid-row';
-        row.setAttribute("id", "x"+x+"");
+        row.setAttribute("id", "x" + x + "");
         gridContainer.appendChild(row);
         //loop para generar columnas (y)
         for (var y = 0; y < grid[x].length; y++) {
-            var rowX = document.getElementById('x'+x+'');
+            var rowX = document.getElementById('x' + x + '');
             var col = document.createElement("div");
             if (grid[x][y] === 'obstacle') {
                 // si tiene obstaculo
                 col.className = 'grid-col obstacle';
-            }
-            else if (grid[x][y] === 'rover') {
+            } else if (grid[x][y] === 'rover') {
                 //si hay rover definido en el objeto rovers
                 col.className = 'grid-col rover';
-            }
-            else {
+            } else {
                 col.className = 'grid-col';
             }
-            col.setAttribute("id", "x"+x+"y"+y);
+            col.setAttribute("id", "x" + x + "y" + y);
             rowX.appendChild(col);
         }
     }
 }
+
+
+/* ========================================================
+MOVE THE ROVER EN GRID GRÁFICAMENTE
+======================================================== */
+function moveRoverGraphicFW() {
+    var lastCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos - 1]);
+    var nextCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+
+function moveRoverGraphicBW() {
+    var lastCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos + 1]);
+    var nextCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+
+function moveRoverGraphicLeft() {
+    var lastCell = document.getElementById('x' + [Xpos + 1] + 'y' + [Ypos]);
+    var nextCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+
+function moveRoverGraphicRight() {
+    var lastCell = document.getElementById('x' + [Xpos - 1] + 'y' + [Ypos]);
+    var nextCell = document.getElementById('x' + [Xpos] + 'y' + [Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+/* ========================================================
+ON LOAD
+======================================================== */
+document.addEventListener('DOMContentLoaded', function() {
+    whichRover();
+    generateGrid();
+}, false);
+
+
+/* ========================================================
+EVENTOS TECLADO
+======================================================== */
+//prevenir scroll en flechas de teclado
+window.addEventListener("keydown", function(e) {
+    if ([37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
+// funciones en keyup para el rover
+
+window.addEventListener("keyup", function(event) {
+    key = event.key;
+    console.log(key);
+    switch (key) {
+        case 'ArrowUp':
+            moveForward(rover);
+            autoScrollList();
+            break;
+        case 'ArrowDown':
+            moveBackward(rover);
+            autoScrollList();
+            break;
+        case 'ArrowLeft':
+            turnLeft(rover);
+            autoScrollList();
+            break;
+        case 'ArrowRight':
+            turnRight(rover);
+            autoScrollList();
+            break;
+    }
+});
