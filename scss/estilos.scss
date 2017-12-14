@@ -216,7 +216,7 @@ section {
                         top: 5px;
                     }
                 }
-            }
+            } 
 
             .grid-row {
                 width: 520px;
@@ -227,13 +227,6 @@ section {
                         position: relative;
                         @for $i from 0 through 9 {
                             &#x0y#{$i} {
-                                // &:before {
-                                //     content: 'x#{$i}';
-                                //     position: absolute;
-                                //     left: -18px;
-                                //     font-size: 0.5em;
-                                //     top: 5px;
-                                // }
                                 &:after {
                                     content: 'y#{$i}';
                                     position: absolute;
