@@ -24,6 +24,8 @@ var rovers = [
     }
 ];
 
+
+
 //variables globales rover
 var rover;
 var roverName;
@@ -32,7 +34,11 @@ var Xpos;
 var Ypos;
 var obstacleText = 'Rover has encountered an obstacle. Try another direction!';
 var beyondLimitsText = 'Rover is beyond limits';
-
+//vars para posicionar los rovers
+var posRov1X = rovers[0].position.x;
+var posRov1Y = rovers[0].position.y;
+var posRov2X = rovers[1].position.x;
+var posRov2Y = rovers[1].position.y;
 // detectar rover
 function activateRover(btn) {
     //borrar clase active
@@ -121,32 +127,36 @@ function turnRight(rover) {
     movementHistory('turnRight D: ' + dir, rover);
 }
 
-
 function moveForward(rover) {
     console.log('moveForward / posición previa: X ' + Xpos + ', Y ' + Ypos);
     var obstacle = grid[Xpos][Ypos];
     // movementHistory('moveForward / previous pos: X ' + Xpos + ', Y ' + Ypos, rover);
-    if (dir === 'N' && Ypos < 10) {
+    if (dir === 'N' && Ypos < 9) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Ypos += 1;
+            moveRoverGraphicFW();
+
         } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'S' && Ypos > 0) {
         if (grid[Xpos][Ypos-1] != 'obstacle') {
             Ypos -= 1;
+            moveRoverGraphicBW();
         } else {
             movementHistory(obstacleText, rover);
         }
-    } else if (dir === 'E' && Xpos < 10) {
+    } else if (dir === 'E' && Xpos < 9) {
         if (grid[Xpos+1][Ypos] != 'obstacle') {
             Xpos += 1;
+            moveRoverGraphicRight();
         } else {
             movementHistory(obstacleText, rover);
         }
     } else if (dir === 'W' && Xpos > 0) {
         if (grid[Xpos-1][Ypos] != 'obstacle') {
             Xpos -= 1;
+            moveRoverGraphicLeft();
         } else {
             movementHistory(obstacleText, rover);
         }
@@ -164,13 +174,15 @@ function moveBackward(rover) {
     if (dir === 'N' && Ypos > 0) {
         if (grid[Xpos][Ypos-1] != 'obstacle') {
             Ypos -= 1;
+            moveRoverGraphicBW();
         }
         else {
             movementHistory(obstacleText, rover);
         }
-    } else if (dir === 'S' && Ypos < 10) {
+    } else if (dir === 'S' && Ypos < 9) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Ypos += 1;
+            moveRoverGraphicFW();
         }
         else {
             movementHistory(obstacleText, rover);
@@ -178,13 +190,15 @@ function moveBackward(rover) {
     } else if (dir === 'E' && Xpos > 0) {
         if (grid[Xpos][Ypos-1] != 'obstacle') {
             Xpos -= 1;
+            moveRoverGraphicLeft();
         }
         else {
             movementHistory(obstacleText, rover);
         }
-    } else if (dir === 'W' && Xpos < 10) {
+    } else if (dir === 'W' && Xpos < 9) {
         if (grid[Xpos][Ypos+1] != 'obstacle') {
             Xpos += 1;
+            moveRoverGraphicRight();
         }
         else {
             movementHistory(obstacleText, rover);
@@ -194,6 +208,41 @@ function moveBackward(rover) {
     }
     console.log('moveBackward / posición reasignada: X ' + Xpos + ', Y ' + Ypos);
     movementHistory('moveBackward X ' + Xpos + ', Y ' + Ypos, rover);
+}
+
+/* ============================
+mover los rover gráficamente
+============================== */
+function moveRoverGraphicFW(){
+    var lastCell = document.getElementById('x'+[Xpos]+'y'+[Ypos-1]);
+    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
+    console.log('palante: cambia la clase rover');
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+function moveRoverGraphicBW(){
+    var lastCell = document.getElementById('x'+[Xpos]+'y'+[Ypos+1]);
+    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
+    console.log('patrás: cambia la clase rover');
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+}
+function moveRoverGraphicLeft(){
+    var lastCell = document.getElementById('x'+[Xpos+1]+'y'+[Ypos]);
+    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+    console.log(lastCell);
+    console.log(nextCell);
+
+}
+function moveRoverGraphicRight(){
+    var lastCell = document.getElementById('x'+[Xpos-1]+'y'+[Ypos]);
+    var nextCell = document.getElementById('x'+[Xpos]+'y'+[Ypos]);
+    lastCell.classList.remove("rover");
+    nextCell.classList.add("rover");
+    console.log('cell last: '+lastCell);
+    console.log('cell arriving: '+nextCell);
 }
 
 /* ======================
@@ -233,19 +282,19 @@ window.addEventListener("keyup", function(event) {
     console.log(key);
     switch (key) {
         case 'ArrowUp':
-            moveForward(rover,grid);
+            moveForward(rover);
             autoScrollList();
             break;
         case 'ArrowDown':
-            moveBackward(rover,grid);
+            moveBackward(rover);
             autoScrollList();
             break;
         case 'ArrowLeft':
-            turnLeft(rover,grid);
+            turnLeft(rover);
             autoScrollList();
             break;
         case 'ArrowRight':
-            turnRight(rover,grid);
+            turnRight(rover);
             autoScrollList();
             break;
     }
@@ -312,7 +361,7 @@ function reloadApp() {
 GRID
 ====================== */
 var grid = [
-    [false, false, 'obstacle', false, false, false, false, false, false, false],
+    ['rover', false, 'obstacle', false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, 'obstacle', false],
     [false, false, false, false, false, false, false, false, false, false],
     [false, 'obstacle', false, false, false, false, false, false, false, false],
@@ -321,22 +370,35 @@ var grid = [
     [false, false, false, false, false, false, false, 'obstacle', false, false],
     ['obstacle', false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, 'obstacle', false, false, false, false, false, false]
+    [false, false, false, 'obstacle', false, false, false, false, false, 'rover']
 ];
 
 function generateGrid() {
-    console.log(grid.length);
+
+    //grid wrapper html object
     var gridContainer = document.getElementById('grid-wrapper');
+    //loop para generar filas (x)
     for (var x = 0; x < grid.length; x++) {
         var row = document.createElement("div");
         row.className = 'grid-row';
         row.setAttribute("id", "x"+x+"");
         gridContainer.appendChild(row);
+        //loop para generar columnas (y)
         for (var y = 0; y < grid[x].length; y++) {
             var rowX = document.getElementById('x'+x+'');
             var col = document.createElement("div");
-            col.className = 'grid-col';
-            col.setAttribute("id", "y"+y+"");
+            if (grid[x][y] === 'obstacle') {
+                // si tiene obstaculo
+                col.className = 'grid-col obstacle';
+            }
+            else if (grid[x][y] === 'rover') {
+                //si hay rover definido en el objeto rovers
+                col.className = 'grid-col rover';
+            }
+            else {
+                col.className = 'grid-col';
+            }
+            col.setAttribute("id", "x"+x+"y"+y);
             rowX.appendChild(col);
         }
     }

@@ -1,7 +1,7 @@
 @import 'reset';
 $verde: #00ff00;
 $verde-dark: rgba(0, 255, 0, .5);
-$vino:#421d23;
+$vino: #421d23;
 /* ======================
 Tags y helpers
 ====================== */
@@ -69,6 +69,7 @@ Columnas
     width: 1280px;
     max-width: 100%;
     margin: 0 auto;
+
     &:after {
         visibility: hidden;
         display: block;
@@ -112,7 +113,7 @@ section {
         letter-spacing: 2px;
 
         span {
-            color: red;
+            color: yellow;
             letter-spacing: 2px;
         }
     }
@@ -169,7 +170,7 @@ section {
     &#history {
         #history-wrapper {
             width: 700px;
-            height: 300px;
+            height: 505px;
             max-width: 85%;
             overflow-y: scroll;
             border: 2px solid $verde;
@@ -198,6 +199,75 @@ section {
                 font-size: 0.45em;
                 line-height: 1.6;
                 color: $verde-dark;
+            }
+        }
+    }
+
+    &#grid {
+        #grid-wrapper {
+            margin: 0 auto;
+            @for $i from 0 through 9 {
+                #x#{$i} {
+                    &:before {
+                        content: 'x#{$i}';
+                        position: absolute;
+                        left: -18px;
+                        font-size: 0.5em;
+                        top: 5px;
+                    }
+                }
+            }
+
+            .grid-row {
+                width: 520px;
+                margin: 0 auto;
+                position: relative;
+
+                &:after {
+                    visibility: hidden;
+                    display: block;
+                    font-size: 0;
+                    content: " ";
+                    clear: both;
+                    height: 0;
+                }
+
+                .grid-col {
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                    background: #222222;
+                    border: 1px solid $verde;
+
+                    &.obstacle,
+                    &.rover {
+                        background: black;
+                        position: relative;
+
+                        &:before {
+                            content: '\f071';
+                            font-family: fontawesome;
+                            position: absolute;
+                            color: $vino;
+                            font-size: 40px;
+                            left: 50%;
+                            margin-left: -20px;
+                            top: 50%;
+                            margin-top: -17px;
+                        }
+                    }
+
+                    &.rover {
+                        background: $verde;
+
+                        &:before {
+                            content: '\f04b';
+                            margin-left: -16px;
+                            margin-top: -20px;
+                            color: #222222;
+                        }
+                    }
+                }
             }
         }
     }
@@ -275,4 +345,56 @@ Otros
     color: $verde-dark;
     font-size: 0.65em;
     letter-spacing: 0;
+}
+/* ======================
+MQ
+====================== */
+@media screen and (max-width:959px) {
+    .column-container {
+        width: 100%;
+
+        .col {
+            float: none;
+        }
+
+        .col-6 {
+            width: 100%;
+        }
+    }
+}
+@media screen and (max-width:767px) {
+    section {
+        &#grid {
+            #grid-wrapper {
+                .grid-row {
+                    width: 320px;
+
+                    .grid-col {
+                        width: 30px;
+                        height: 30px;
+
+                        &.obstacle,
+                        &.rover {
+                            background: black;
+                            position: relative;
+
+                            &:before {
+                                font-size: 24px;
+                                margin-left: -12px;
+                                margin-top: -10px;
+                            }
+                        }
+
+                        &.rover {
+                            &:before {
+                                content: '\f04b';
+                                margin-left: -9px;
+                                margin-top: -12px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
