@@ -205,7 +205,7 @@ section {
 
     &#grid {
         #grid-wrapper {
-            margin: 0 auto;
+            margin: 25px auto 0;
             @for $i from 0 through 9 {
                 #x#{$i} {
                     &:before {
@@ -222,7 +222,29 @@ section {
                 width: 520px;
                 margin: 0 auto;
                 position: relative;
-
+                &:first-child {
+                    .grid-col {
+                        position: relative;
+                        @for $i from 0 through 9 {
+                            &#x0y#{$i} {
+                                // &:before {
+                                //     content: 'x#{$i}';
+                                //     position: absolute;
+                                //     left: -18px;
+                                //     font-size: 0.5em;
+                                //     top: 5px;
+                                // }
+                                &:after {
+                                    content: 'y#{$i}';
+                                    position: absolute;
+                                    top: -12px;
+                                    font-size: 0.5em;
+                                    left: 2px;
+                                }
+                            }
+                        }
+                    }
+                }
                 &:after {
                     visibility: hidden;
                     display: block;
@@ -261,8 +283,8 @@ section {
                         background: $verde;
 
                         &:before {
-                            content: '\f04b';
-                            margin-left: -16px;
+                            content: '\f1b9';
+                            margin-left: -22.5px;
                             margin-top: -20px;
                             color: #222222;
                         }

@@ -67,13 +67,18 @@ function whichRover() {
     var changeRoverBtn2 = document.getElementById("select-rover-2");
     if (changeRoverBtn1.classList.contains('active')) {
         rover = rovers[0];
+        dir = rover.direction;
+        Xpos = rover.position.x;
+        Ypos = rover.position.y;
+        roverName = rover.name;
     } else if (changeRoverBtn2.classList.contains('active')) {
         rover = rovers[1];
+        dir = rover.direction;
+        Xpos = rover.position.x;
+        Ypos = rover.position.y;
+        roverName = rover.name;
     }
-    dir = rover.direction;
-    Xpos = rover.position.x;
-    Ypos = rover.position.y;
-    roverName = rover.name;
+
     console.log('dirección por defecto: ' + dir);
     console.log('Rover: ' + roverName);
     console.log('dirección por defecto: ' + dir);
@@ -142,7 +147,6 @@ function moveForward(rover) {
         if (grid[Xpos][Ypos + 1] != 'obstacle') {
             Ypos += 1;
             moveRoverGraphicFW();
-
         } else {
             movementHistory(obstacleText, rover);
         }
@@ -369,6 +373,8 @@ function moveRoverGraphicRight() {
     lastCell.classList.remove("rover");
     nextCell.classList.add("rover");
 }
+
+
 /* ========================================================
 ON LOAD
 ======================================================== */
